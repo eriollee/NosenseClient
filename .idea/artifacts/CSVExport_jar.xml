@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CSVExport:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CSVExport_jar</output-path>
+    <root id="archive" name="CSVExport.jar">
+      <element id="module-output" name="CSVExport" />
+    </root>
+  </artifact>
+</component>
