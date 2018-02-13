@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="ant-1.10.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/ant-1.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-beanutils-1.9.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-lang3-3.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-text-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/opencsv-4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-api-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/zt-zip-1.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

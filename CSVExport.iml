@@ -61,7 +61,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://G:/Downloads/jar/slf4j-api-1.7.25.jar!/" />
@@ -70,5 +70,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="ant-1.10.1" level="project" />
   </component>
 </module>

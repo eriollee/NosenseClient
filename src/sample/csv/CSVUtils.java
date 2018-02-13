@@ -10,8 +10,8 @@ public class CSVUtils {
 
     }
 
-    public static void getData(String path) throws IOException {
-        System.out.println("path=="+path);
+    public static void getData(String path,String exportPath) throws IOException {
+        System.out.println("exportPath=="+exportPath);
         File file = new File(path);
         //获取文件名中的设备
         String fileName = file.getName();
@@ -36,14 +36,14 @@ public class CSVUtils {
 
 
         //写入csv
-        File file2 = new File("e:\\write.csv");
+        File file2 = new File(exportPath+"\\write.csv");
         Writer writer = new FileWriter(file2,true);
         CSVWriter csvWriter = new CSVWriter(writer);
         if(!file2.exists()){
             String[] title = {"设备类型" , "传感器类型"};
             csvWriter.writeNext(title);
         }
-        if(!isSame(devName)){
+        if(!isSame(devName,exportPath)){
             csvWriter.writeNext(strs);
         }
         csvWriter.close();
@@ -52,8 +52,8 @@ public class CSVUtils {
     }
 
 
-    public static boolean isSame(String devName) throws IOException {
-        File file = new File("e:\\write.csv");
+    public static boolean isSame(String devName,String exportPath) throws IOException {
+        File file = new File(exportPath+"\\write.csv");
         FileReader fReader = new FileReader(file);
         CSVReader csvReader = new CSVReader(fReader);
         List<String[]> list = csvReader.readAll();

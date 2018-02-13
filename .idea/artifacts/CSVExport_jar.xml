@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/CSVExport_jar</output-path>
     <root id="archive" name="CSVExport.jar">
       <element id="module-output" name="CSVExport" />
+      <element id="library" level="project" name="ant-1.10.1" />
     </root>
   </artifact>
 </component>
