@@ -7,21 +7,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/ant_1_10_1.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/CSVExport_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/CSVExport_jar.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/sample/csv/CalcUtils.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/sample/csv/MergeUtils.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/CSVExport.iml" afterPath="$PROJECT_DIR$/CSVExport.iml" />
+      <change beforePath="$PROJECT_DIR$/data/data.zip" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/data/data/write.csv" afterPath="" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/CSVExport_jar/CSVExport.jar" afterPath="$PROJECT_DIR$/out/artifacts/CSVExport_jar/CSVExport.jar" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/JavaFXApp/JavaFXApp.jar" afterPath="$PROJECT_DIR$/out/artifacts/JavaFXApp/JavaFXApp.jar" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/JavaFXApp/JavaFXApp.jnlp" afterPath="$PROJECT_DIR$/out/artifacts/JavaFXApp/JavaFXApp.jnlp" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSVExport/sample/Main$1.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSVExport/sample/Main.class" afterPath="$PROJECT_DIR$/out/production/CSVExport/sample/Main.class" />
       <change beforePath="$PROJECT_DIR$/out/production/CSVExport/sample/csv/CSVUtils.class" afterPath="$PROJECT_DIR$/out/production/CSVExport/sample/csv/CSVUtils.class" />
       <change beforePath="$PROJECT_DIR$/out/production/CSVExport/sample/csv/FileUtils.class" afterPath="$PROJECT_DIR$/out/production/CSVExport/sample/csv/FileUtils.class" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" afterPath="$PROJECT_DIR$/src/sample/Main.java" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSVExport/sample/csv/ZipUtils.class" afterPath="$PROJECT_DIR$/out/production/CSVExport/sample/csv/ZipUtils.class" />
       <change beforePath="$PROJECT_DIR$/src/sample/csv/CSVUtils.java" afterPath="$PROJECT_DIR$/src/sample/csv/CSVUtils.java" />
       <change beforePath="$PROJECT_DIR$/src/sample/csv/FileUtils.java" afterPath="$PROJECT_DIR$/src/sample/csv/FileUtils.java" />
+      <change beforePath="$PROJECT_DIR$/src/sample/csv/ZipUtils.java" afterPath="$PROJECT_DIR$/src/sample/csv/ZipUtils.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,11 +82,34 @@
       <file leaf-file-name="CSVUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/csv/CSVUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+            <state relative-caret-position="205">
+              <caret line="106" column="28" lean-forward="false" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MergeUtils.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/sample/csv/MergeUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="82">
+              <caret line="9" column="71" lean-forward="false" selection-start-line="9" selection-start-column="71" selection-end-line="9" selection-end-column="71" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#294#300#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CalcUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sample/csv/CalcUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -105,8 +127,8 @@
       <file leaf-file-name="ZipUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/csv/ZipUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+            <state relative-caret-position="166">
+              <caret line="16" column="28" lean-forward="false" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,8 +139,8 @@
       <file leaf-file-name="StringUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/csv/StringUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" column="15" lean-forward="false" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+            <state relative-caret-position="18">
+              <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -127,18 +149,18 @@
       <file leaf-file-name="FileUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/csv/FileUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2223">
-              <caret line="121" column="24" lean-forward="false" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
+            <state relative-caret-position="794">
+              <caret line="48" column="92" lean-forward="false" selection-start-line="48" selection-start-column="84" selection-end-line="48" selection-end-column="92" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="55" column="49" lean-forward="true" selection-start-line="55" selection-start-column="49" selection-end-line="55" selection-end-column="49" />
+            <state relative-caret-position="246">
+              <caret line="59" column="43" lean-forward="false" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2660#2661#0" expanded="true" />
@@ -151,39 +173,9 @@
       <file leaf-file-name="CSVExport.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CSVExport.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
+            <state relative-caret-position="1197">
               <caret line="63" column="35" lean-forward="false" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AccessControlContext.java" pinned="false" current-in-tab="false">
-        <entry file="jar://D:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/security/AccessControlContext.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7790">
-              <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZipUtils.class" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/out/production/CSVExport/sample/csv/ZipUtils.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-              <folding>
-                <marker date="1518506087534" expanded="true" signature="0:104" ph="/.../" />
-                <marker date="1518506087534" expanded="false" signature="134:473" ph="..." />
-                <marker date="1518506087534" expanded="true" signature="521:528" ph="{}" />
-                <marker date="1518506087534" expanded="true" signature="610:984" ph="{...}" />
-                <marker date="1518506087534" expanded="true" signature="1062:1481" ph="{...}" />
-                <marker date="1518506087534" expanded="true" signature="1549:2077" ph="{...}" />
-                <marker date="1518506087534" expanded="true" signature="2139:2590" ph="{...}" />
-                <marker date="1518506087534" expanded="true" signature="2646:3781" ph="{...}" />
-                <marker date="1518506087534" expanded="true" signature="3844:3961" ph="{...}" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -206,6 +198,9 @@
       <find>CSVUtils</find>
       <find>name=</find>
       <find>getData</find>
+      <find>867394039777569-73AF07DB3D88389D_Redmi Note 5A_2018021721531</find>
+      <find>unzip</find>
+      <find>fileName</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -226,10 +221,11 @@
       <list>
         <option value="$PROJECT_DIR$/src/sample/Controller.java" />
         <option value="$PROJECT_DIR$/src/sample/csv/StringUtils.java" />
-        <option value="$PROJECT_DIR$/src/sample/csv/ZipUtils.java" />
-        <option value="$PROJECT_DIR$/src/sample/csv/CSVUtils.java" />
-        <option value="$PROJECT_DIR$/src/sample/csv/FileUtils.java" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
+        <option value="$PROJECT_DIR$/src/sample/csv/ZipUtils.java" />
+        <option value="$PROJECT_DIR$/src/sample/csv/FileUtils.java" />
+        <option value="$PROJECT_DIR$/src/sample/csv/CSVUtils.java" />
+        <option value="$PROJECT_DIR$/src/sample/csv/MergeUtils.java" />
       </list>
     </option>
   </component>
@@ -250,8 +246,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1278" />
-    <option name="height" value="726" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -274,7 +270,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -291,7 +286,20 @@
               <item name="CSVExport" type="b2602c69:ProjectViewProjectNode" />
               <item name="CSVExport" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CSVExport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSVExport" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="sample" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CSVExport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSVExport" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="sample" type="462c0819:PsiDirectoryNode" />
+              <item name="csv" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CSVExport" type="b2602c69:ProjectViewProjectNode" />
@@ -302,6 +310,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
@@ -339,7 +348,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.MergeUtils">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module />
       <option name="HTML_USED" value="false" />
@@ -406,6 +415,25 @@
       <envs />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+    </configuration>
+    <configuration name="MergeUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="sample.csv.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="sample.csv.MergeUtils" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="CSVExport" />
+      <envs />
     </configuration>
     <configuration name="ZipUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
@@ -512,17 +540,19 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="Application.CSVUtils" />
       <item index="2" class="java.lang.String" itemvalue="Application.ZipUtils" />
       <item index="3" class="java.lang.String" itemvalue="Application.FileUtils" />
+      <item index="4" class="java.lang.String" itemvalue="Application.MergeUtils" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.FileUtils" />
-        <item index="1" class="java.lang.String" itemvalue="Application.CSVUtils" />
-        <item index="2" class="java.lang.String" itemvalue="Application.ZipUtils" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Application.MergeUtils" />
+        <item index="1" class="java.lang.String" itemvalue="Application.FileUtils" />
+        <item index="2" class="java.lang.String" itemvalue="Application.CSVUtils" />
+        <item index="3" class="java.lang.String" itemvalue="Application.ZipUtils" />
       </list>
     </recent_temporary>
   </component>
@@ -543,12 +573,13 @@
       <workItem from="1518327663493" duration="15014000" />
       <workItem from="1518396986346" duration="16336000" />
       <workItem from="1518486683225" duration="16263000" />
-      <workItem from="1518511150820" duration="317000" />
+      <workItem from="1518511150820" duration="921000" />
+      <workItem from="1519281414340" duration="11656000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49232000" />
+    <option name="totallyTimeSpent" value="61492000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -562,8 +593,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3496063" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3496063" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -573,8 +604,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3984252" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3984252" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -603,18 +634,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sample/csv/CSVUtils.java</url>
-          <line>14</line>
+          <line>27</line>
           <properties />
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/csv/FileUtils.java</url>
-          <line>35</line>
-          <properties />
-          <option name="timeStamp" value="20" />
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="21" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -623,24 +648,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/sample/csv/ZipUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/csv/StringUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="15" lean-forward="false" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/csv/FileUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2223">
@@ -674,15 +681,15 @@
         <state relative-caret-position="190">
           <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
-            <marker date="1518506087534" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1518506087534" expanded="false" signature="134:473" ph="..." />
-            <marker date="1518506087534" expanded="true" signature="521:528" ph="{}" />
-            <marker date="1518506087534" expanded="true" signature="610:984" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1062:1481" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1549:2077" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2139:2590" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2646:3781" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="3844:3961" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1519285092534" expanded="false" signature="134:473" ph="..." />
+            <marker date="1519285092534" expanded="true" signature="521:528" ph="{}" />
+            <marker date="1519285092534" expanded="true" signature="610:1038" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1116:1535" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1603:2131" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2193:2644" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2700:3835" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="3898:4015" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -758,15 +765,15 @@
         <state relative-caret-position="133">
           <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
-            <marker date="1518506087534" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1518506087534" expanded="false" signature="134:473" ph="..." />
-            <marker date="1518506087534" expanded="true" signature="521:528" ph="{}" />
-            <marker date="1518506087534" expanded="true" signature="610:984" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1062:1481" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1549:2077" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2139:2590" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2646:3781" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="3844:3961" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1519285092534" expanded="false" signature="134:473" ph="..." />
+            <marker date="1519285092534" expanded="true" signature="521:528" ph="{}" />
+            <marker date="1519285092534" expanded="true" signature="610:1038" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1116:1535" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1603:2131" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2193:2644" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2700:3835" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="3898:4015" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -841,15 +848,15 @@
         <state relative-caret-position="133">
           <caret line="12" column="23" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding>
-            <marker date="1518506087534" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1518506087534" expanded="false" signature="134:473" ph="..." />
-            <marker date="1518506087534" expanded="true" signature="521:528" ph="{}" />
-            <marker date="1518506087534" expanded="true" signature="610:984" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1062:1481" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1549:2077" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2139:2590" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2646:3781" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="3844:3961" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1519285092534" expanded="false" signature="134:473" ph="..." />
+            <marker date="1519285092534" expanded="true" signature="521:528" ph="{}" />
+            <marker date="1519285092534" expanded="true" signature="610:1038" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1116:1535" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1603:2131" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2193:2644" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2700:3835" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="3898:4015" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -929,18 +936,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/out/production/CSVExport/sample/csv/ZipUtils.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
+        <state relative-caret-position="133">
           <caret line="19" column="23" lean-forward="false" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
-            <marker date="1518506087534" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1518506087534" expanded="false" signature="134:473" ph="..." />
-            <marker date="1518506087534" expanded="true" signature="521:528" ph="{}" />
-            <marker date="1518506087534" expanded="true" signature="610:984" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1062:1481" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="1549:2077" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2139:2590" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="2646:3781" ph="{...}" />
-            <marker date="1518506087534" expanded="true" signature="3844:3961" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1519285092534" expanded="false" signature="134:473" ph="..." />
+            <marker date="1519285092534" expanded="true" signature="521:528" ph="{}" />
+            <marker date="1519285092534" expanded="true" signature="610:1038" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1116:1535" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="1603:2131" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2193:2644" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="2700:3835" ph="{...}" />
+            <marker date="1519285092534" expanded="true" signature="3898:4015" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -960,13 +967,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/00000000-0000-0000-0000-000000000000_00000000-0000-0000-0000-000000000000_iPhone 6 Plus_20180209145907.csv" />
-    <entry file="jar://D:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="471" column="18" lean-forward="false" selection-start-line="471" selection-start-column="18" selection-end-line="471" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/io/FileInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -981,34 +981,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/csv/CSVUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/csv/ZipUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://G:/Downloads/jar/ant-1.10.1.jar!/org/apache/tools/zip/ZipFile.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-304">
@@ -1020,14 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7790">
           <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/csv/StringUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="15" lean-forward="false" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -1050,18 +1014,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/csv/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2223">
-          <caret line="121" column="24" lean-forward="false" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../JavaFxDemo/pom.xml" />
     <entry file="file://$PROJECT_DIR$/CSVExport.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
+        <state relative-caret-position="1197">
           <caret line="63" column="35" lean-forward="false" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
           <folding />
         </state>
@@ -1069,12 +1025,83 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="55" column="49" lean-forward="true" selection-start-line="55" selection-start-column="49" selection-end-line="55" selection-end-column="49" />
+        <state relative-caret-position="246">
+          <caret line="59" column="43" lean-forward="false" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2660#2661#0" expanded="true" />
             <element signature="e#2688#2689#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14">
+          <caret line="147" column="13" lean-forward="false" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/csv/CalcUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/csv/StringUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/csv/ZipUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="16" column="28" lean-forward="false" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/csv/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="794">
+          <caret line="48" column="92" lean-forward="false" selection-start-line="48" selection-start-column="84" selection-end-line="48" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/csv/CSVUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="106" column="28" lean-forward="false" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/csv/MergeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="9" column="71" lean-forward="false" selection-start-line="9" selection-start-column="71" selection-end-line="9" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#294#300#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -27,27 +27,41 @@ public class CSVUtils {
         //获取表头
         FileReader fReader = new FileReader(file);
         CSVReader csvReader = new CSVReader(fReader);
-        String[] strs = csvReader.readNext();
-        csvReader.close();
+        try{
 
-        //表头time改为手机类型
-        strs[0] = devName;
-
+            String[] strs = csvReader.readNext();
+            csvReader.close();
 
 
-        //写入csv
-        File file2 = new File(exportPath+"\\write.csv");
-        Writer writer = new FileWriter(file2,true);
-        CSVWriter csvWriter = new CSVWriter(writer);
-        if(!file2.exists()){
-            String[] title = {"设备类型" , "传感器类型"};
-            csvWriter.writeNext(title);
+
+            //写入csv
+            File file2 = new File(exportPath+"\\write.csv");
+
+            if(!file2.exists()){
+
+                Writer writer = new FileWriter(file2,true);
+                CSVWriter csvWriter = new CSVWriter(writer);
+                String[] title = {"设备类型" , "传感器类型"};
+                csvWriter.writeNext(title);
+                csvWriter.close();
+            }
+            if(!isSame(devName,exportPath)){
+                //表头time改为手机类型
+                strs[0] = devName;
+                Writer writer = new FileWriter(file2,true);
+                CSVWriter csvWriter = new CSVWriter(writer);
+                csvWriter.writeNext(strs);
+                csvWriter.close();
+            }
+
+        }catch (Exception e){
+            System.out.println("filename="+fileName);
+            e.printStackTrace();
+            csvReader.close();
+            file.delete();
+        }finally {
+
         }
-        if(!isSame(devName,exportPath)){
-            csvWriter.writeNext(strs);
-        }
-        csvWriter.close();
-
 
     }
 
@@ -66,4 +80,38 @@ public class CSVUtils {
         }
         return false;
     }
+
+    public static void getDetailData(String path,String exportPath) throws IOException {
+            File file = new File(path);
+            FileReader fReader = new FileReader(file);
+            CSVReader csvReader = new CSVReader(fReader);
+            String[] strs = csvReader.readNext();
+            if(strs != null && strs.length > 0){
+                for(String str : strs)
+                    if(null != str && !str.equals(""))
+                        System.out.print(str + " , ");
+                System.out.println("\n---------------");
+            }
+            List<String[]> list = csvReader.readAll();
+            for(String[] ss : list){
+                for(String s : ss)
+                    if(null != s && !s.equals(""))
+                        System.out.print(s + " , ");
+                System.out.println();
+            }
+            csvReader.close();
+
+        //写入csv
+        File file2 = new File(exportPath+"\\"+file.getName().substring(0,file.getName().length()-6)+"_A.csv");
+
+        if(!file2.exists()){
+
+            Writer writer = new FileWriter(file2,true);
+            CSVWriter csvWriter = new CSVWriter(writer);
+            String[] title = strs;
+            csvWriter.writeNext(title);
+            csvWriter.close();
+        }
+    }
+
 }

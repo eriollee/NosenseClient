@@ -15,11 +15,12 @@ public class ZipUtils {
      * 对应的是ant.jar
      */
     public static void unzip(String sourceZip,String destDir) throws Exception{
+        File file = new File(sourceZip);
         try{
             Project p = new Project();
             Expand e = new Expand();
             e.setProject(p);
-            e.setSrc(new File(sourceZip));
+            e.setSrc(file);
             e.setOverwrite(false);
             e.setDest(new File(destDir));
            /*
@@ -30,6 +31,7 @@ public class ZipUtils {
             e.setEncoding("gbk");
             e.execute();
         }catch(Exception e){
+            file.delete();
             throw e;
         }
     }

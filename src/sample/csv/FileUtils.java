@@ -93,8 +93,8 @@ public class FileUtils {
 //        } catch (IOException ex) {
 //        }
         try {
-            readfile( getPath(),0);
-            System.out.println("121212");
+            //readfile( getPath(),0);
+//            System.out.println("121212");
             readfile( getPath()+ "\\data\\",1);
             System.out.println("3434");
             readfile( getPath()+ "\\data\\",2);
