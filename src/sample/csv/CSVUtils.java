@@ -81,7 +81,7 @@ public class CSVUtils {
         return false;
     }
 
-    public static void getDetailData(String path,String exportPath) throws IOException {
+    public static void getDetailData(String path,String exportPath,String fileName) throws IOException {
             File file = new File(path);
             FileReader fReader = new FileReader(file);
             CSVReader csvReader = new CSVReader(fReader);
@@ -92,18 +92,12 @@ public class CSVUtils {
                         System.out.print(str + " , ");
                 System.out.println("\n---------------");
             }
-            List<String[]> list = csvReader.readAll();
-            for(String[] ss : list){
-                for(String s : ss)
-                    if(null != s && !s.equals(""))
-                        System.out.print(s + " , ");
-                System.out.println();
-            }
-            csvReader.close();
+
 
         //写入csv
-        File file2 = new File(exportPath+"\\"+file.getName().substring(0,file.getName().length()-6)+"_A.csv");
+        File file2 = new File(exportPath+"\\"+fileName+"_A.csv");
 
+        //写入标题
         if(!file2.exists()){
 
             Writer writer = new FileWriter(file2,true);
@@ -112,6 +106,24 @@ public class CSVUtils {
             csvWriter.writeNext(title);
             csvWriter.close();
         }
+
+        //写入内容
+        Writer writer = new FileWriter(file2,true);
+        CSVWriter csvWriter = new CSVWriter(writer);
+
+        List<String[]> list = csvReader.readAll();
+        for(String[] ss : list){
+            for(String s : ss)
+                if(null != s && !s.equals(""))
+                    System.out.print(s + " , ");
+            System.out.println();
+            csvWriter.writeNext(ss);
+        }
+        csvReader.close();
+
+
+
+        csvWriter.close();
     }
 
 }

@@ -24,11 +24,15 @@ public class MergeUtils {
 //                ZipUtils.ungzip(f.getCanonicalPath(), f);
 //                f.delete();
                 if(!"0".equals(f2.getName().split("_")[4].substring(0,1))){
-                    CSVUtils.getDetailData(f.getCanonicalPath(),FileUtils.getPath()+ "\\data\\");
+                    filesTemp.add(f);
+                }
+
+                if(i==files.size()-1){
+                    mergeFile(filesTemp);
                 }
 
             }else {
-
+                //todo
             }
 
         }
@@ -52,5 +56,13 @@ public class MergeUtils {
 //            System.out.println(f.getName());
 //        }
         return files;
+    }
+
+    public static void mergeFile(List<File> files)  throws Exception{
+         for(int i=0;i<files.size();i++){
+             File f = files.get(i);
+             CSVUtils.getDetailData(f.getCanonicalPath(),FileUtils.getPath()+ "\\data\\",files.get(0).getName().substring(0,files.get(0).getName().length()-6));
+        }
+
     }
 }
