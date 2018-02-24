@@ -103,18 +103,13 @@ public class CalcUtils {
 
 
 
-
-
-
-
-        operationHandler(lines);
-
-
-
         //java8新特性　去除不必要的元素
         identityList.removeIf(s -> s.toString().indexOf("_x")>-1
                 ||s.toString().indexOf("_y")>-1
                 ||s.toString().indexOf("_z")>-1);
+
+        List identityOper = identityList;
+
         identityList.addAll(1,identityListTmp);
         //System.out.println(identityList);
 
@@ -126,7 +121,7 @@ public class CalcUtils {
         }
 
         //输出数据
-        String[] para  = new String [title.length-1];
+        String[] para  = new String [title.length];
         //输出方差均值最小最大
         for(int ii = 0;ii<len; ii++){
             String[] tmp = list.get(ii);
@@ -134,6 +129,15 @@ public class CalcUtils {
             para[4*(ii+1)-2] = getMin(tmp)+"";
             para[4*(ii+1)-1] = getLoss(tmp)+"";
             para[4*(ii+1)] = getAver(tmp)+"";
+        }
+
+        //其余的值进行赋值
+
+        int len2 =title.length-4*len-1;
+        System.out.println("len2=="+len2);
+        operationHandler(lines,len2,identityOper,propIdentity);
+        for(int jj=0;jj<len2;jj++){
+            para[4*len+jj+1]="0";
         }
 
         csvWriter.writeNext(strs);
@@ -231,8 +235,8 @@ public class CalcUtils {
     }
 
 
-    public static void operationHandler(List<String[]> lines){
-        String[] dataTime= new String[lines.size()];//取列表全部汇款时间
+    public static void operationHandler(List<String[]> lines,int length,List identityOper,LinkedProperties propIdentity){
+        String[] operationTotal = new String[length];
         ArrayList<String> dataRemitTime = new ArrayList<String> ();//取时间
         ArrayList<String>  dataRemitType = new ArrayList<String> ();//取类型
         for(int i=1;i<lines.size();i++) {
@@ -244,6 +248,16 @@ public class CalcUtils {
         }
         System.out.println(dataRemitTime);
         System.out.println(dataRemitType);
+        for(Object i :identityOper){
+
+            propIdentity.getProperty(i.toString());
+            System.out.println(propIdentity.getProperty(i.toString()));
+        }
+
+        for (int i = 0; i <length; i++) {
+            operationTotal[i] = "0";
+
+        }
     }
 
 
