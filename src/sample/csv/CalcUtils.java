@@ -19,9 +19,16 @@ public class CalcUtils {
     public static ArrayList<String> avg020Tmp = new ArrayList<String>();
     public static ArrayList<String> avg100Tmp = new ArrayList<String>();
     public static ArrayList<String> avg110Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg120Tmp = new ArrayList<String>();
     public static ArrayList<String> avg201Tmp = new ArrayList<String>();
     public static ArrayList<String> avg301Tmp = new ArrayList<String>();
     public static ArrayList<String> avg401Tmp = new ArrayList<String>();
+
+
+    public static int Tmp200 = 0;
+    public static int Tmp300 = 0;
+    public static int Tmp400 = 0;
+
 
 
     public static void main(String[] args) throws IOException {
@@ -145,8 +152,8 @@ public class CalcUtils {
         //其余的值进行赋值
 
         int len2 =title.length-4*len-1;
-        System.out.println("len2=="+len2);
-        System.out.println(identityOper);
+     //   System.out.println("len2=="+len2);
+     //   System.out.println(identityOper);
         String[] operation =  operationHandler(lines,identityOper,propIdentity);
         for(int jj=0;jj<len2;jj++){
             para[4*len+jj+1]=operation[jj];
@@ -253,14 +260,22 @@ public class CalcUtils {
      * @param propIdentity  目录对应的值
      */
     public static String[] operationHandler(List<String[]> lines,List identityOper,LinkedProperties propIdentity){
-        String[] operationTotal = new String[identityOper.size()-1];
+        String[] operationTotal = new String[identityOper.size()-1];//转换临时存储
         ArrayList<String> dataRemitTime = new ArrayList<String> ();//取时间
         ArrayList<String>  dataRemitType = new ArrayList<String> ();//取类型
         HashMap<String,String> identityMap = new HashMap<String,String>();//目录与操作的映射
         ArrayList amountSpeed = new ArrayList();
         ArrayList timeTmp = new ArrayList();//时间差计算
-        String operationTmp = "";
+        String operationTmp = "";//操作临时存储
+        String[] operationTimeTmp = new String[1];//整体时长临时存储
+
+        ArrayList<String>  operationTimeListTotalTmp = new ArrayList<String> ();//整体时长临时存储链表合计
+        ArrayList  operationTimeListTmp = new ArrayList();//整体时长临时存储链表
+
+        boolean isSameOperation = true; //是否相同操作
+
         for(int i=1;i<lines.size();i++) {
+
             String[] line = lines.get(i);
             if(!"-1".equals(line[line.length-1])) {
                 dataRemitTime.add(line[0]);
@@ -272,19 +287,19 @@ public class CalcUtils {
 //                if("10".equals(line[line.length - 1])){
 //                    System.out.println(line[0]);
 //                }
-                //计算操作时间
+                //收集操作时间
                 if("".equals(operationTmp)){
 
                  //   System.out.println("line = "+line[0]);
-                    if("30".equals(line[line.length - 1])) {
+                    if((("00|01|02|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])) {
                         operationTmp = line[line.length - 1];//初始化操作
-                        System.out.println("line=="+line[0]);
+                        //System.out.println("line=="+line[0]);
                         timeTmp.add(line[0]);
                     }
                 }else{
                     if(operationTmp.equals(line[line.length - 1])){
 
-                        if("30".equals(line[line.length - 1])){
+                        if((("00|01|02|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])){
                        //     System.out.println("line="+line[0]);
                             timeTmp.add(line[0]);
                         }
@@ -293,28 +308,41 @@ public class CalcUtils {
 //                            for(int j =0;j<timeTmp.size();j++){
 //                                System.out.println(line[0]);
 //                            }
-                            System.out.println(timeTmp);
-                            calAVGTime(timeTmp,operationTmp,identityMap);
+                         //   System.out.println(timeTmp);
+                            calQuality(timeTmp,operationTmp,identityMap);//计算数量
+                            calAVGTime(timeTmp,operationTmp,identityMap);//计算操作时间
                         }
                         timeTmp.clear();//清空时间差计算
                         operationTmp = ""; //清空初始化
                     }
 
+
                 }
 
-//                //计算操作时间
-//                if((("00|01|02|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])){
-//                    String[] line2 = lines.get(i+1);
-//                    System.out.println(line[line.length - 1]);
-//                    System.out.println(line2[line2.length - 1]);
-//                    if(line2[line2.length - 1].equals(line[line.length - 1])){
-//                        System.out.println("line=="+line2[line2.length - 1]);
-//                    }
-//                }
+                //计算总时间
+                if("10".equals(line[line.length - 1])&&isSameOperation==true){
+                    operationTimeListTmp.add(line[0]);//获取起始操作时间
+                    isSameOperation = false;
+                    System.out.println("line=="+line[0]);
+                }
+
+                if("12".equals(line[line.length - 1])){
+                    operationTimeListTmp.add(line[0]);//获取终止操作时间
+                    isSameOperation = true;
+                    operationTimeListTotalTmp.add(String.valueOf(Long.parseLong((String)operationTimeListTmp.get(1))-Long.parseLong((String)operationTimeListTmp.get(0))));
+                    operationTimeListTmp.clear();
+                }
+
+               // System.out.println(operationTimeListTotalTmp);
 
 
             }
+
         }
+        setTimeTotal(operationTimeListTotalTmp,identityMap);
+
+
+
 //        System.out.println(identityMap);
 //        System.out.println(dataRemitTime);
 //        System.out.println(dataRemitType);
@@ -340,27 +368,68 @@ public class CalcUtils {
         return  operationTotal;
     }
 
+    /**
+     *
+     * @param operationTimeListTotalTmp 总体时长
+     * @param identityMap 赋值
+     * @return
+     */
+    private static HashMap setTimeTotal(ArrayList<String> operationTimeListTotalTmp, HashMap<String, String> identityMap) {
+        System.out.println(operationTimeListTotalTmp);
+        identityMap.put("120",getAver(operationTimeListTotalTmp.toArray(new String[0])));
+        return identityMap;
+    }
+
+    private static HashMap calQuality(ArrayList timeTmp, String index, HashMap<String, String> identityMap) {
+        if("20".equals(index)){
+            Tmp200 += timeTmp.size();
+            identityMap.put(index+"1",String.valueOf(Tmp200));
+        }
+        if("30".equals(index)){
+            Tmp300 += timeTmp.size();
+            identityMap.put(index+"1",String.valueOf(Tmp300));
+        }
+        if("40".equals(index)){
+            Tmp400 += timeTmp.size();
+            identityMap.put(index+"1",String.valueOf(Tmp400));
+        }
+        return identityMap;
+    }
+
     private static HashMap calAVGTime(ArrayList timeTmp,String index,HashMap identityMap) {
         if(timeTmp.size()>1){
-            System.out.println("index=="+index);
+            //System.out.println("index=="+index);
             String remitAmountAVG = round(Double.parseDouble(String.valueOf(Long.parseLong((String)timeTmp.get(timeTmp.size()-1))-Long.parseLong((String)timeTmp.get(0)))),
                     Double.parseDouble(String.valueOf(timeTmp.size()))
                     ,3);
-            if("30".equals(index)){
-                avg301Tmp.add(remitAmountAVG);
-                if(avg301Tmp.size()>1){
-                    System.out.println(avg301Tmp);
-                    BigDecimal end = new BigDecimal(String.valueOf(avg301Tmp.get(avg301Tmp.size()-1)));
-                    BigDecimal start = new BigDecimal(String.valueOf(avg301Tmp.get(0)));
-                    identityMap.put("301",round((end.add(start)).doubleValue(),
-                            Double.parseDouble(String.valueOf(avg301Tmp.size()))
-                            ,3));
-                }else {
-                    identityMap.put("301",avg301Tmp.get(0));
-                }
-
+            if("00".equals(index)){
+                setTime(index,avg000Tmp,identityMap,remitAmountAVG);
             }
-                System.out.println("avg=="+identityMap);
+            if("01".equals(index)){
+                setTime(index,avg010Tmp,identityMap,remitAmountAVG);
+            }
+            if("02".equals(index)){
+                setTime(index,avg020Tmp,identityMap,remitAmountAVG);
+            }
+            if("10".equals(index)){
+                setTime(index,avg100Tmp,identityMap,remitAmountAVG);
+            }
+            if("11".equals(index)){
+                setTime(index,avg110Tmp,identityMap,remitAmountAVG);
+            }
+            if("12".equals(index)){
+                setTime(index,avg120Tmp,identityMap,remitAmountAVG);
+            }
+            if("20".equals(index)){
+                setTime(index,avg201Tmp,identityMap,remitAmountAVG);
+            }
+            if("30".equals(index)){
+                setTime(index,avg301Tmp,identityMap,remitAmountAVG);
+            }
+            if("40".equals(index)){
+                setTime("401",avg401Tmp,identityMap,remitAmountAVG);
+            }
+        //        System.out.println("avg=="+identityMap);
         }
 
         return identityMap;
@@ -376,7 +445,19 @@ public class CalcUtils {
         return String.valueOf(a.divide(b,scale,RoundingMode.HALF_UP));
     }
 
-    public static HashMap setTime(String index,ArrayList timeTmp,HashMap identityMap){
+    public static HashMap setTime(String index,ArrayList timeTmp,HashMap identityMap,String remitAmountAVG){
+        timeTmp.add(remitAmountAVG);
+        if(timeTmp.size()>1){
+          //  System.out.println(timeTmp);
+            BigDecimal end = new BigDecimal(String.valueOf(timeTmp.get(timeTmp.size()-1)));
+            BigDecimal start = new BigDecimal(String.valueOf(timeTmp.get(0)));
+            identityMap.put(index+"0",round((end.add(start)).doubleValue(),
+                    Double.parseDouble(String.valueOf(timeTmp.size()))
+                    ,3));
+        }else {
+            identityMap.put(index+"0",timeTmp.get(0));
+        }
+
         return  identityMap;
     }
 
