@@ -8,13 +8,22 @@ import sample.properties.PropUtils;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
+
 import org.apache.commons.lang3.*;
 
 public class CalcUtils {
+
+    public static ArrayList<String> avg000Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg010Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg020Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg100Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg110Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg201Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg301Tmp = new ArrayList<String>();
+    public static ArrayList<String> avg401Tmp = new ArrayList<String>();
+
+
     public static void main(String[] args) throws IOException {
         dataProcess();
     }
@@ -108,7 +117,9 @@ public class CalcUtils {
                 ||s.toString().indexOf("_y")>-1
                 ||s.toString().indexOf("_z")>-1);
 
-        List identityOper = identityList;
+        //获取操作目录
+        List identityOper = new ArrayList();
+        identityOper.addAll(identityList);
 
         identityList.addAll(1,identityListTmp);
         //System.out.println(identityList);
@@ -135,9 +146,10 @@ public class CalcUtils {
 
         int len2 =title.length-4*len-1;
         System.out.println("len2=="+len2);
-        operationHandler(lines,len2,identityOper,propIdentity);
+        System.out.println(identityOper);
+        String[] operation =  operationHandler(lines,identityOper,propIdentity);
         for(int jj=0;jj<len2;jj++){
-            para[4*len+jj+1]="0";
+            para[4*len+jj+1]=operation[jj];
         }
 
         csvWriter.writeNext(strs);
@@ -234,31 +246,138 @@ public class CalcUtils {
         return lines;
     }
 
-
-    public static void operationHandler(List<String[]> lines,int length,List identityOper,LinkedProperties propIdentity){
-        String[] operationTotal = new String[length];
+    /**
+     *
+     * @param lines 表格中的值
+     * @param identityOper 对应目录
+     * @param propIdentity  目录对应的值
+     */
+    public static String[] operationHandler(List<String[]> lines,List identityOper,LinkedProperties propIdentity){
+        String[] operationTotal = new String[identityOper.size()-1];
         ArrayList<String> dataRemitTime = new ArrayList<String> ();//取时间
         ArrayList<String>  dataRemitType = new ArrayList<String> ();//取类型
+        HashMap<String,String> identityMap = new HashMap<String,String>();//目录与操作的映射
+        ArrayList amountSpeed = new ArrayList();
+        ArrayList timeTmp = new ArrayList();//时间差计算
+        String operationTmp = "";
         for(int i=1;i<lines.size();i++) {
             String[] line = lines.get(i);
             if(!"-1".equals(line[line.length-1])) {
                 dataRemitTime.add(line[0]);
                 dataRemitType.add(line[line.length - 1]);
+                //获取操作行为
+                if(!identityMap.containsKey(line[line.length - 1])){
+                    identityMap.put(line[line.length - 1],"1");
+                }
+//                if("10".equals(line[line.length - 1])){
+//                    System.out.println(line[0]);
+//                }
+                //计算操作时间
+                if("".equals(operationTmp)){
+
+                 //   System.out.println("line = "+line[0]);
+                    if("30".equals(line[line.length - 1])) {
+                        operationTmp = line[line.length - 1];//初始化操作
+                        System.out.println("line=="+line[0]);
+                        timeTmp.add(line[0]);
+                    }
+                }else{
+                    if(operationTmp.equals(line[line.length - 1])){
+
+                        if("30".equals(line[line.length - 1])){
+                       //     System.out.println("line="+line[0]);
+                            timeTmp.add(line[0]);
+                        }
+                    }else {
+                        if(timeTmp != null){
+//                            for(int j =0;j<timeTmp.size();j++){
+//                                System.out.println(line[0]);
+//                            }
+                            System.out.println(timeTmp);
+                            calAVGTime(timeTmp,operationTmp,identityMap);
+                        }
+                        timeTmp.clear();//清空时间差计算
+                        operationTmp = ""; //清空初始化
+                    }
+
+                }
+
+//                //计算操作时间
+//                if((("00|01|02|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])){
+//                    String[] line2 = lines.get(i+1);
+//                    System.out.println(line[line.length - 1]);
+//                    System.out.println(line2[line2.length - 1]);
+//                    if(line2[line2.length - 1].equals(line[line.length - 1])){
+//                        System.out.println("line=="+line2[line2.length - 1]);
+//                    }
+//                }
+
+
             }
         }
-        System.out.println(dataRemitTime);
-        System.out.println(dataRemitType);
+//        System.out.println(identityMap);
+//        System.out.println(dataRemitTime);
+//        System.out.println(dataRemitType);
+      //  System.out.println(identityOper.size());
         for(Object i :identityOper){
 
-            propIdentity.getProperty(i.toString());
-            System.out.println(propIdentity.getProperty(i.toString()));
-        }
-
-        for (int i = 0; i <length; i++) {
-            operationTotal[i] = "0";
+            //propIdentity.getProperty(i.toString());
+           // System.out.println(propIdentity.getProperty(i.toString()));
+          //  System.out.println( dataRemitType.contains(propIdentity.getProperty(i.toString())));
 
         }
+
+        for (int i = 1; i < identityOper.size(); i++) {
+           // System.out.println(propIdentity.getProperty((String)identityOper.get(i)));
+            operationTotal[i-1] =  propIdentity.getProperty((String)identityOper.get(i));
+            if(identityMap.containsKey(propIdentity.getProperty((String)identityOper.get(i)))){//如果含有key则置为key值
+                operationTotal[i-1] = identityMap.get(propIdentity.getProperty((String)identityOper.get(i)));
+            }else {
+                operationTotal[i-1] = "0";
+            }
+        }
+
+        return  operationTotal;
     }
 
+    private static HashMap calAVGTime(ArrayList timeTmp,String index,HashMap identityMap) {
+        if(timeTmp.size()>1){
+            System.out.println("index=="+index);
+            String remitAmountAVG = round(Double.parseDouble(String.valueOf(Long.parseLong((String)timeTmp.get(timeTmp.size()-1))-Long.parseLong((String)timeTmp.get(0)))),
+                    Double.parseDouble(String.valueOf(timeTmp.size()))
+                    ,3);
+            if("30".equals(index)){
+                avg301Tmp.add(remitAmountAVG);
+                if(avg301Tmp.size()>1){
+                    System.out.println(avg301Tmp);
+                    BigDecimal end = new BigDecimal(String.valueOf(avg301Tmp.get(avg301Tmp.size()-1)));
+                    BigDecimal start = new BigDecimal(String.valueOf(avg301Tmp.get(0)));
+                    identityMap.put("301",round((end.add(start)).doubleValue(),
+                            Double.parseDouble(String.valueOf(avg301Tmp.size()))
+                            ,3));
+                }else {
+                    identityMap.put("301",avg301Tmp.get(0));
+                }
+
+            }
+                System.out.println("avg=="+identityMap);
+        }
+
+        return identityMap;
+    }
+    /**
+     * 提供精确的小数位四舍五入处理
+     * @param scale 小数点保留几位
+     * @return 四舍五入后的结果
+     */
+    public  static  String round(double numerator,double denominator,int scale){
+        BigDecimal a = new BigDecimal(Double.toString(numerator));
+        BigDecimal b = new BigDecimal(Double.toString(denominator));
+        return String.valueOf(a.divide(b,scale,RoundingMode.HALF_UP));
+    }
+
+    public static HashMap setTime(String index,ArrayList timeTmp,HashMap identityMap){
+        return  identityMap;
+    }
 
 }
