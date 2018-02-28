@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 
 public class MergeUtils {
-    public static void main(String[] args) throws Exception {
+    public static void mergeHandler() throws Exception {
         List<File> files = orderByName(FileUtils.getPath()+ "\\data\\");
         ArrayList<File> filesTemp = new   ArrayList<File>(); //存放临时文件合并
         for (int i=0;i<files.size();i++) {
@@ -16,23 +16,54 @@ public class MergeUtils {
             }else {
                 f2 = files.get(i+1);//下一个文件
             }
+            String[] s = f.getName().split("_");
+            String next = null;
+            if(s[2].indexOf("iPhone")>-1){
+//                System.out.println(s[4].substring(0,1));
+//                System.out.println(s[2]);
 
+                try {
+                    next = f2.getName().split("_")[4].substring(0,1);
+                } catch (Exception e) {
+                    next = "0";//若下一条为安卓则置为0
+                }
 
-            if(f.getName().indexOf("iPhone")>-1){
-                String[] s = f.getName().split("_");
-                System.out.println(s[4].substring(0,1));
-//                ZipUtils.ungzip(f.getCanonicalPath(), f);
-//                f.delete();
-                if(!"0".equals(f2.getName().split("_")[4].substring(0,1))){
+                if(!"0".equals(next)){
                     filesTemp.add(f);
                 }
 
-                if(i==files.size()-1){
+                if("0".equals(next)){
+                    filesTemp.add(f);
                     mergeFile(filesTemp);
+                    filesTemp = new ArrayList<File>();
+                }else if (i==files.size()-1){
+                   //if (i==files.size()-1)
+                    mergeFile(filesTemp);
+                    filesTemp = new ArrayList<File>();
                 }
 
-            }else {
+            }else {//安卓
                 //todo
+                try {
+                    next = f2.getName().split("_")[2].substring(0,1);
+                } catch (Exception e) {
+                    next = "1";//若下一条为iphone则置为1
+                }
+
+                if(!"1".equals(next)){
+                    filesTemp.add(f);
+                }
+
+                if("1".equals(next)){
+                    filesTemp.add(f);
+                    mergeFile(filesTemp);
+                    filesTemp = new ArrayList<File>();
+                }else if (i==files.size()-1){
+                    //if (i==files.size()-1)
+                    mergeFile(filesTemp);
+                    filesTemp = new ArrayList<File>();
+                }
+
             }
 
         }
@@ -61,8 +92,10 @@ public class MergeUtils {
     public static void mergeFile(List<File> files)  throws Exception{
          for(int i=0;i<files.size();i++){
              File f = files.get(i);
-             CSVUtils.getDetailData(f.getCanonicalPath(),FileUtils.getPath()+ "\\data\\",files.get(0).getName().substring(0,files.get(0).getName().length()-6));
+             CSVUtils.getDetailData(f,FileUtils.getPath()+ "\\data\\",files.get(0).getName().substring(0,files.get(0).getName().length()-6));
         }
 
     }
+
+
 }

@@ -81,21 +81,29 @@ public class CSVUtils {
         return false;
     }
 
-    public static void getDetailData(String path,String exportPath,String fileName) throws IOException {
-            File file = new File(path);
+    public static void getDetailData(File f,String exportPath,String fileName) throws IOException {
+            File file = new File(f.getCanonicalPath());
             FileReader fReader = new FileReader(file);
             CSVReader csvReader = new CSVReader(fReader);
             String[] strs = csvReader.readNext();
-            if(strs != null && strs.length > 0){
-                for(String str : strs)
-                    if(null != str && !str.equals(""))
-                        System.out.print(str + " , ");
-                System.out.println("\n---------------");
-            }
+//            if(strs != null && strs.length > 0){
+//                for(String str : strs)
+//                    if(null != str && !str.equals(""))
+//                        System.out.print(str + " , ");
+//                System.out.println("\n---------------");
+//            }
 
 
         //写入csv
-        File file2 = new File(exportPath+"\\"+fileName+"_A.csv");
+        File file3 = new File(f.getParentFile().getParentFile().getPath()+"\\total\\");
+        File file2 = null;
+        if(file3.exists()){
+            file2 = new File(f.getParentFile().getParentFile().getPath()+"\\total\\"+fileName+"_A.csv");
+        }else {
+            file3.mkdirs();
+            file2 = new File(f.getParentFile().getParentFile().getPath()+"\\total\\"+fileName+"_A.csv");
+        }
+
 
         //写入标题
         if(!file2.exists()){
@@ -113,10 +121,10 @@ public class CSVUtils {
 
         List<String[]> list = csvReader.readAll();
         for(String[] ss : list){
-            for(String s : ss)
-                if(null != s && !s.equals(""))
-                    System.out.print(s + " , ");
-            System.out.println();
+//            for(String s : ss)
+//                if(null != s && !s.equals(""))
+//                    System.out.print(s + " , ");
+//            System.out.println();
             csvWriter.writeNext(ss);
         }
         csvReader.close();

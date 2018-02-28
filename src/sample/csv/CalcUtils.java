@@ -32,20 +32,23 @@ public class CalcUtils {
 
 
     public static void main(String[] args) throws IOException {
-        dataProcess();
+        //dataProcess();
     }
 
-    public static void dataProcess() throws IOException {
+    public static void dataProcess(String CanonicalPath) throws IOException {
 
         //新建3文件，讲数据保存到3中
-        String filePath2 = FileUtils.getPath()+ "_temp.csv";
+        String filePath2 = FileUtils.getPath()+ "_ALL.csv";
         File retFile = new File(filePath2);
-        if(!retFile.exists()){
-            retFile.createNewFile();
+        boolean isFirstWrite = true;
+        if (!retFile.exists()){
+            isFirstWrite = true;
+        }else {
+            isFirstWrite = false;
         }
 
         //先写入title
-        Writer writer = new FileWriter(filePath2);
+        Writer writer = new FileWriter(filePath2,true);
         CSVWriter csvWriter = new CSVWriter(writer);
         List identityList = new ArrayList();
         List identityListTmp = new ArrayList ();
@@ -54,9 +57,9 @@ public class CalcUtils {
         identityList = propIdentity.getKeyList();
 
 
-        String recordPath = FileUtils.getPath()+ "\\data\\01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_iPhone 7 Plus_20180212182520_A.csv";
+       // String recordPath = FileUtils.getPath()+ "\\data\\01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_iPhone 7 Plus_20180212182520_A.csv";
        // System.out.println(identityList);
-
+        String recordPath = FileUtils.getPath()+ "\\total\\"+CanonicalPath;
 
         //所有的原始数据
         List<String[]> lines =  getContent(recordPath);
@@ -83,12 +86,15 @@ public class CalcUtils {
                  //获取索引
                  String titleSingle = propIdentity.getProperty(identityList.get(i).toString());
                  for(String title:titleA){
-                     if(titleSingle.indexOf(title) >-1){
+                     if(titleSingle.indexOf(title) >-1){//iphone按标题取值
                       //   System.out.println(title);
-                         Arrays.binarySearch(titleA,title);
-
+                      //   Arrays.binarySearch(titleA,title);
+                         System.out.println(title);
                          int indexOf= ArrayUtils.indexOf( titleA, title);
                          indexList.add(indexOf);
+                     }else {
+                         //安卓按最先出现的取值
+
                      }
                  }
 
@@ -162,7 +168,10 @@ public class CalcUtils {
             para[4*len+jj+1]=operation[jj];
         }
 
-        csvWriter.writeNext(strs);
+        if(isFirstWrite){
+            csvWriter.writeNext(strs);
+        }
+
         csvWriter.writeNext(para);
         csvWriter.close();
         //保存每一笔汇款数据的list
