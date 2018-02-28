@@ -16,13 +16,17 @@ public class ZipUtils {
      */
     public static void unzip(String sourceZip,String destDir) throws Exception{
         File file = new File(sourceZip);
+        String[] s = sourceZip.split("_");
+        String s1[] = s[0].split("\\\\");
+        System.out.println("s[0]="+s1[s1.length-1]);
         try{
             Project p = new Project();
             Expand e = new Expand();
             e.setProject(p);
             e.setSrc(file);
             e.setOverwrite(false);
-            e.setDest(new File(destDir));
+            File file2 = new File(destDir+"\\temp\\");
+            e.setDest(file2);
            /*
            ant下的zip工具默认压缩编码为UTF-8编码，
            而winRAR软件压缩是用的windows默认的GBK或者GB2312编码
@@ -30,6 +34,15 @@ public class ZipUtils {
            */
             e.setEncoding("gbk");
             e.execute();
+
+            for(String  f:file2.list()){
+                // System.out.println("f=="+f);
+                File fileRe =new File(destDir+"\\temp\\"+f);
+                fileRe.renameTo(new File(destDir+"\\temp\\"+s1[s1.length-1]+"_"+f));
+                FileUtils.fileChannelCopy(destDir+"\\temp\\"+s1[s1.length-1]+"_"+f,destDir+s1[s1.length-1]+"_"+f);
+            }
+            FileUtils.deleteDirectory(destDir+"\\temp\\");
+
         }catch(Exception e){
             file.delete();
             throw e;
