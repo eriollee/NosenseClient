@@ -57,8 +57,10 @@ public class CalcUtils {
         String recordPath = FileUtils.getPath()+ "\\data\\01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_iPhone 7 Plus_20180212182520_A.csv";
        // System.out.println(identityList);
 
+
         //所有的原始数据
         List<String[]> lines =  getContent(recordPath);
+        String IME = getName(recordPath);
         //获取到原始数据的标题
         String[] titleA = lines.get(0);
         for(int i=0; i<titleA.length;i++){
@@ -140,6 +142,7 @@ public class CalcUtils {
 
         //输出数据
         String[] para  = new String [title.length];
+        para[0] =IME;
         //输出方差均值最小最大
         for(int ii = 0;ii<len; ii++){
             String[] tmp = list.get(ii);
@@ -253,6 +256,16 @@ public class CalcUtils {
         return lines;
     }
 
+    public static String getName(String uploadPath) throws IOException{
+        String name = "";
+        File file = new File(uploadPath);
+        String fileName = file.getName();
+        String[] s = fileName.split("_");
+        name = s[0];
+//        System.out.println("name=="+name);
+        return name;
+    }
+
     /**
      *
      * @param lines 表格中的值
@@ -323,7 +336,7 @@ public class CalcUtils {
                 if("10".equals(line[line.length - 1])&&isSameOperation==true){
                     operationTimeListTmp.add(line[0]);//获取起始操作时间
                     isSameOperation = false;
-                    System.out.println("line=="+line[0]);
+                   // System.out.println("line=="+line[0]);
                 }
 
                 if("12".equals(line[line.length - 1])){
