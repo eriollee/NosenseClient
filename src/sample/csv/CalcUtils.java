@@ -505,7 +505,7 @@ public class CalcUtils {
                 setTime(index,avg301Tmp,identityMap,remitAmountAVG);
             }
             if("40".equals(index)){
-                setTime("401",avg401Tmp,identityMap,remitAmountAVG);
+                setTime(index,avg401Tmp,identityMap,remitAmountAVG);
             }
         }
 
@@ -524,6 +524,7 @@ public class CalcUtils {
 
     public static HashMap setTime(String index,ArrayList timeTmp,HashMap identityMap,String remitAmountAVG){
         timeTmp.add(remitAmountAVG);
+        System.out.println(timeTmp);
         if(timeTmp.size()>1){
           //  System.out.println(timeTmp);
             BigDecimal end = new BigDecimal(String.valueOf(timeTmp.get(timeTmp.size()-1)));
@@ -531,6 +532,7 @@ public class CalcUtils {
             identityMap.put(index+"A",round((end.add(start)).doubleValue(),
                     Double.parseDouble(String.valueOf(timeTmp.size()))
                     ,3));
+            System.out.println(identityMap);
         }else {
             identityMap.put(index+"A",timeTmp.get(0));
         }
