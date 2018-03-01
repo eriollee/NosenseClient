@@ -12,6 +12,8 @@ import java.util.*;
 
 import org.apache.commons.lang3.*;
 
+import static sample.csv.FileUtils.getPath;
+
 public class CalcUtils {
 
     public static ArrayList<String> avg000Tmp = new ArrayList<String>();
@@ -32,13 +34,13 @@ public class CalcUtils {
 
 
     public static void main(String[] args) throws IOException {
-        //dataProcess();
+        dataProcess("HUAWEI NXT-AL10_20180214135306_A.csv");
     }
 
     public static void dataProcess(String CanonicalPath) throws IOException {
-
+        System.out.println("file=="+CanonicalPath);
         //新建3文件，讲数据保存到3中
-        String filePath2 = FileUtils.getPath()+ "_ALL.csv";
+        String filePath2 = getPath()+ "_ALL.csv";
         File retFile = new File(filePath2);
         boolean isFirstWrite = true;
         if (!retFile.exists()){
@@ -58,7 +60,7 @@ public class CalcUtils {
 
 
        // String recordPath = FileUtils.getPath()+ "\\data\\01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_iPhone 7 Plus_20180212182520_A.csv";
-        String recordPath = FileUtils.getPath()+ "\\total\\"+CanonicalPath;
+        String recordPath = getPath()+ "\\total\\"+CanonicalPath;
 
         //所有的原始数据
         List<String[]> lines =  getContent(recordPath);
@@ -72,8 +74,11 @@ public class CalcUtils {
         }
 
 
-        List<Integer> indexList = new ArrayList<Integer>();
-
+      //  List<Integer> indexList = new ArrayList<Integer>();
+        int[] indexs = new int[12];
+        for (int i = 0; i < indexs.length; i++) {
+            indexs[i] = -1;
+        }//数组初始化为-1
         boolean isAccelerometer = true;//是否取值加速度
         boolean isGyroscope = true;//是否取值陀螺仪
         boolean isGravity = true;//是否取值重力感应
@@ -97,37 +102,53 @@ public class CalcUtils {
                  for(String title:titleA){
                      if(titleSingle.indexOf(title) >-1){//iphone按标题取值
                          int indexOf= ArrayUtils.indexOf( titleA, title);
-                         indexList.add(indexOf);
+                       //  indexList.add(indexOf);
+                        // System.out.println("i=="+i);
+                         indexs[i-1]=indexOf;
                      }else {
                          //安卓按最先出现的取值
                          if(!isIPhone) {
                              int indexOf = 0;
+//                             setIndexValue("accelerometer",isAccelerometer,titleA,title,indexs);
                              if (title.toLowerCase().contains("accelerometer") && isAccelerometer) {
                                  indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexList.add(indexOf);
-                                 indexList.add(indexOf + 1);
-                                 indexList.add(indexOf + 2);
+                                 //System.out.println(title);
+                                 indexs[0]=indexOf;
+                                 indexs[1]=indexOf+1;
+                                 indexs[2]=indexOf+2;
+//                                 indexList.add(indexOf);
+//                                 indexList.add(indexOf + 1);
+//                                 indexList.add(indexOf + 2);
                                  isAccelerometer = false;
                              }
                              if (title.toLowerCase().contains("gyroscope") && isGyroscope) {
                                  indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexList.add(indexOf);
-                                 indexList.add(indexOf + 1);
-                                 indexList.add(indexOf + 2);
+                                 indexs[3]=indexOf;
+                                 indexs[4]=indexOf+1;
+                                 indexs[5]=indexOf+2;
+//                                 indexList.add(indexOf);
+//                                 indexList.add(indexOf + 1);
+//                                 indexList.add(indexOf + 2);
                                  isGyroscope = false;
                              }
                              if (title.toLowerCase().contains("gravity") && isGravity) {
                                  indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexList.add(indexOf);
-                                 indexList.add(indexOf + 1);
-                                 indexList.add(indexOf + 2);
+                                 indexs[6]=indexOf;
+                                 indexs[7]=indexOf+1;
+                                 indexs[8]=indexOf+2;
+//                                 indexList.add(indexOf);
+//                                 indexList.add(indexOf + 1);
+//                                 indexList.add(indexOf + 2);
                                  isGravity = false;
                              }
                              if (title.toLowerCase().contains("rotation") && isRotation) {
                                  indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexList.add(indexOf);
-                                 indexList.add(indexOf + 1);
-                                 indexList.add(indexOf + 2);
+                                 indexs[9]=indexOf;
+                                 indexs[10]=indexOf+1;
+                                 indexs[11]=indexOf+2;
+//                                 indexList.add(indexOf);
+//                                 indexList.add(indexOf + 1);
+//                                 indexList.add(indexOf + 2);
                                  isRotation = false;
                              }
                          }
@@ -141,9 +162,9 @@ public class CalcUtils {
         }
 
 
-        Integer[] indexs = indexList.toArray(new Integer[0]);
+       // Integer[] indexs = indexList.toArray(new Integer[0]);
         int len = indexs.length;
-
+        //System.out.println(Arrays.toString(indexs));
         //找出列
         List<String[]> list = new ArrayList<String[]>();
         for(int j=0;j<len+1;j++){
@@ -151,7 +172,11 @@ public class CalcUtils {
             for(int i=0;i<lines.size()-1;i++){
                 String line[] = lines.get(i+1);
                 if(j<len){
-                    tmp[i] = line[indexs[j]];//取索引
+                    try {
+                        tmp[i] = line[indexs[j]];//取索引
+                    } catch (Exception e) {
+                        tmp[i] = "0";
+                    }
                 }else {
                     tmp[i] = line[line.length-1];//取最后一行type值
                 }
@@ -395,7 +420,10 @@ public class CalcUtils {
                 if("12".equals(line[line.length - 1])){
                     operationTimeListTmp.add(line[0]);//获取终止操作时间
                     isSameOperation = true;
-                    operationTimeListTotalTmp.add(String.valueOf(Long.parseLong((String)operationTimeListTmp.get(1))-Long.parseLong((String)operationTimeListTmp.get(0))));
+                    if(operationTimeListTmp.size()>1){
+                        operationTimeListTotalTmp.add(String.valueOf(Long.parseLong((String)operationTimeListTmp.get(1))-Long.parseLong((String)operationTimeListTmp.get(0))));
+                    }
+
                     operationTimeListTmp.clear();
                 }
 
@@ -406,9 +434,6 @@ public class CalcUtils {
 
         }
         setTimeTotal(operationTimeListTotalTmp,identityMap);
-
-
-
 
 
         for (int i = 1; i < identityOper.size(); i++) {
@@ -437,15 +462,15 @@ public class CalcUtils {
     private static HashMap calQuality(ArrayList timeTmp, String index, HashMap<String, String> identityMap) {
         if("20".equals(index)){
             Tmp200 += timeTmp.size();
-            identityMap.put(index+"1",String.valueOf(Tmp200));
+            identityMap.put(index+"B",String.valueOf(Tmp200));
         }
         if("30".equals(index)){
             Tmp300 += timeTmp.size();
-            identityMap.put(index+"1",String.valueOf(Tmp300));
+            identityMap.put(index+"B",String.valueOf(Tmp300));
         }
         if("40".equals(index)){
             Tmp400 += timeTmp.size();
-            identityMap.put(index+"1",String.valueOf(Tmp400));
+            identityMap.put(index+"B",String.valueOf(Tmp400));
         }
         return identityMap;
     }
@@ -455,13 +480,13 @@ public class CalcUtils {
             String remitAmountAVG = round(Double.parseDouble(String.valueOf(Long.parseLong((String)timeTmp.get(timeTmp.size()-1))-Long.parseLong((String)timeTmp.get(0)))),
                     Double.parseDouble(String.valueOf(timeTmp.size()))
                     ,3);
-            if("00".equals(index)){
+            if("0".equals(index)){
                 setTime(index,avg000Tmp,identityMap,remitAmountAVG);
             }
-            if("01".equals(index)){
+            if("1".equals(index)){
                 setTime(index,avg010Tmp,identityMap,remitAmountAVG);
             }
-            if("02".equals(index)){
+            if("2".equals(index)){
                 setTime(index,avg020Tmp,identityMap,remitAmountAVG);
             }
             if("10".equals(index)){
@@ -503,11 +528,11 @@ public class CalcUtils {
           //  System.out.println(timeTmp);
             BigDecimal end = new BigDecimal(String.valueOf(timeTmp.get(timeTmp.size()-1)));
             BigDecimal start = new BigDecimal(String.valueOf(timeTmp.get(0)));
-            identityMap.put(index+"0",round((end.add(start)).doubleValue(),
+            identityMap.put(index+"A",round((end.add(start)).doubleValue(),
                     Double.parseDouble(String.valueOf(timeTmp.size()))
                     ,3));
         }else {
-            identityMap.put(index+"0",timeTmp.get(0));
+            identityMap.put(index+"A",timeTmp.get(0));
         }
 
         return  identityMap;

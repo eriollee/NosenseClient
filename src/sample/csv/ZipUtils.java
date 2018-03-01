@@ -1,5 +1,6 @@
 package sample.csv;
 
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 import org.zeroturnaround.zip.ZipUtil;
@@ -33,15 +34,21 @@ public class ZipUtils {
            所以解压缩时要制定编码格式
            */
             e.setEncoding("gbk");
-            e.execute();
 
-            for(String  f:file2.list()){
-                // System.out.println("f=="+f);
-                File fileRe =new File(destDir+"\\temp\\"+f);
-                fileRe.renameTo(new File(destDir+"\\temp\\"+s1[s1.length-1]+"_"+f));
-                FileUtils.fileChannelCopy(destDir+"\\temp\\"+s1[s1.length-1]+"_"+f,destDir+s1[s1.length-1]+"_"+f);
+            try {
+                e.execute();
+                for(String  f:file2.list()){
+                    // System.out.println("f=="+f);
+                    File fileRe =new File(destDir+"\\temp\\"+f);
+                    fileRe.renameTo(new File(destDir+"\\temp\\"+s1[s1.length-1]+"_"+f));
+                    FileUtils.fileChannelCopy(destDir+"\\temp\\"+s1[s1.length-1]+"_"+f,destDir+s1[s1.length-1]+"_"+f);
+                }
+                FileUtils.deleteDirectory(destDir+"\\temp\\");
+            } catch (BuildException e1) {
+                file.delete();
             }
-            FileUtils.deleteDirectory(destDir+"\\temp\\");
+
+
 
         }catch(Exception e){
             file.delete();

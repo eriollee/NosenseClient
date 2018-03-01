@@ -8,6 +8,7 @@ public class MergeUtils {
     public static void mergeHandler() throws Exception {
         List<File> files = orderByName(FileUtils.getPath()+ "\\data\\");
         ArrayList<File> filesTemp = new   ArrayList<File>(); //存放临时文件合并
+        //System.out.println(files);
         for (int i=0;i<files.size();i++) {
             File f = files.get(i);
             File f2 = null;
@@ -18,6 +19,7 @@ public class MergeUtils {
             }
             String[] s = f.getName().split("_");
             String next = null;
+            String current = null;
             if(s[2].indexOf("iPhone")>-1){
 //                System.out.println(s[4].substring(0,1));
 //                System.out.println(s[2]);
@@ -45,21 +47,34 @@ public class MergeUtils {
             }else {//安卓
                 //todo
                 try {
-                    next = f2.getName().split("_")[2].substring(0,1);
+                    next = f2.getName().split("_")[3].substring(0,1);
                 } catch (Exception e) {
                     next = "1";//若下一条为iphone则置为1
                 }
+                System.out.println(f.getName());
 
+                try {
+                    current = f.getName().split("_")[3].substring(0,1);
+                } catch (Exception e) {
+                    current = "";
+                }
+
+                //System.out.println("next=="+next);
                 if(!"1".equals(next)){
                     filesTemp.add(f);
                 }
 
                 if("1".equals(next)){
-                    filesTemp.add(f);
+                    if(!"7".equals(current)&&!"".equals(current)){
+                        filesTemp.add(f);
+                    }
                     mergeFile(filesTemp);
                     filesTemp = new ArrayList<File>();
                 }else if (i==files.size()-1){
                     //if (i==files.size()-1)
+                    if("7".equals(current)&&!"".equals(current)) {
+                        filesTemp.remove(filesTemp.size()-1);
+                    }
                     mergeFile(filesTemp);
                     filesTemp = new ArrayList<File>();
                 }
