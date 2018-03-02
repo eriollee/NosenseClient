@@ -34,7 +34,7 @@ public class CalcUtils {
 
 
     public static void main(String[] args) throws IOException {
-        dataProcess("HUAWEI NXT-AL10_20180214135306_A.csv");
+        dataProcess("01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_iPhone 7 Plus_20180212222815_A.csv");
     }
 
     public static void dataProcess(String CanonicalPath) throws IOException {
@@ -164,7 +164,6 @@ public class CalcUtils {
 
        // Integer[] indexs = indexList.toArray(new Integer[0]);
         int len = indexs.length;
-        //System.out.println(Arrays.toString(indexs));
         //找出列
         List<String[]> list = new ArrayList<String[]>();
         for(int j=0;j<len+1;j++){
@@ -331,7 +330,6 @@ public class CalcUtils {
         String fileName = file.getName();
         String[] s = fileName.split("_");
         name = s[0];
-//        System.out.println("name=="+name);
         return name;
     }
 
@@ -361,6 +359,9 @@ public class CalcUtils {
         ArrayList amountSpeed = new ArrayList();
         ArrayList timeTmp = new ArrayList();//时间差计算
         String operationTmp = "";//操作临时存储
+        String operationTmpPreType = "";//上一次操作临时存储
+        String operationTmpPreTime = "";//上一次操作临时存储
+
         String[] operationTimeTmp = new String[1];//整体时长临时存储
 
         ArrayList<String>  operationTimeListTotalTmp = new ArrayList<String> ();//整体时长临时存储链表合计
@@ -378,32 +379,30 @@ public class CalcUtils {
                 if(!identityMap.containsKey(line[line.length - 1])){
                     identityMap.put(line[line.length - 1],"1");
                 }
-
+                System.out.println(line[line.length - 1]);
                 //收集操作时间
                 if("".equals(operationTmp)){
-
-                    if((("00|01|02|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])) {
-                        operationTmp = line[line.length - 1];//初始化操作
-                        //System.out.println("line=="+line[0]);
-                        timeTmp.add(line[0]);
+                    if((("0|1|2|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])) {
+                                operationTmp = line[line.length - 1];
+                                if(operationTmpPreType.equals(operationTmp)){
+                                      timeTmp.add(operationTmpPreTime);//获取上一次操作时间
+                                }
+                                timeTmp.add(line[0]);//获取第一次操作时间
                     }
                 }else{
                     if(operationTmp.equals(line[line.length - 1])){
-
-                        if((("00|01|02|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])){
-                       //     System.out.println("line="+line[0]);
-                            timeTmp.add(line[0]);
+                        if((("0|1|2|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])){
+                            timeTmp.add(line[0]);//获取下一次操作时间
                         }
                     }else {
                         if(timeTmp != null){
-//                            for(int j =0;j<timeTmp.size();j++){
-//                                System.out.println(line[0]);
-//                            }
-                         //   System.out.println(timeTmp);
+                            System.out.println(timeTmp+","+operationTmp);
                             calQuality(timeTmp,operationTmp,identityMap);//计算数量
                             calAVGTime(timeTmp,operationTmp,identityMap);//计算操作时间
                         }
-                        timeTmp.clear();//清空时间差计算
+                       timeTmp = new ArrayList();//清空时间差计算
+                        operationTmpPreType = line[line.length - 1];
+                        operationTmpPreTime = line[0];
                         operationTmp = ""; //清空初始化
                     }
 
@@ -444,8 +443,22 @@ public class CalcUtils {
                 operationTotal[i-1] = "0";
             }
         }
-
+        clearCatch();//清空缓存
         return  operationTotal;
+    }
+
+    private static void clearCatch() {
+        avg010Tmp = new ArrayList<String>();
+        avg020Tmp = new ArrayList<String>();
+        avg100Tmp = new ArrayList<String>();
+        avg110Tmp = new ArrayList<String>();
+        avg120Tmp = new ArrayList<String>();
+        avg201Tmp = new ArrayList<String>();
+        avg301Tmp = new ArrayList<String>();
+        avg401Tmp = new ArrayList<String>();
+        Tmp200 = 0;
+        Tmp300 = 0;
+        Tmp400 = 0;
     }
 
     /**
@@ -524,19 +537,17 @@ public class CalcUtils {
 
     public static HashMap setTime(String index,ArrayList timeTmp,HashMap identityMap,String remitAmountAVG){
         timeTmp.add(remitAmountAVG);
-        System.out.println(timeTmp);
+        //System.out.println(timeTmp);
         if(timeTmp.size()>1){
-          //  System.out.println(timeTmp);
             BigDecimal end = new BigDecimal(String.valueOf(timeTmp.get(timeTmp.size()-1)));
             BigDecimal start = new BigDecimal(String.valueOf(timeTmp.get(0)));
             identityMap.put(index+"A",round((end.add(start)).doubleValue(),
                     Double.parseDouble(String.valueOf(timeTmp.size()))
                     ,3));
-            System.out.println(identityMap);
+
         }else {
             identityMap.put(index+"A",timeTmp.get(0));
         }
-
         return  identityMap;
     }
 
