@@ -12,9 +12,11 @@ import java.util.*;
 
 import org.apache.commons.lang3.*;
 
+import static java.util.stream.Collectors.toList;
 import static sample.csv.FileUtils.getPath;
 
 public class CalcUtils {
+
 
     public static ArrayList<String> avg000Tmp = new ArrayList<String>();
     public static ArrayList<String> avg010Tmp = new ArrayList<String>();
@@ -38,6 +40,7 @@ public class CalcUtils {
     }
 
     public static void dataProcess(String CanonicalPath) throws IOException {
+        List<String> indexAll = new  ArrayList<String>();
         System.out.println("file=="+CanonicalPath);
         //新建3文件，讲数据保存到3中
         String filePath2 = getPath()+ "_ALL.csv";
@@ -48,15 +51,13 @@ public class CalcUtils {
         }else {
             isFirstWrite = false;
         }
+        List<String[]>  dataLines  = new ArrayList<>();
+        //读取原数据
+        if(!isFirstWrite){
+              dataLines =  getContent(filePath2);
+        }
 
-        //先写入title
-        Writer writer = new FileWriter(filePath2,true);
-        CSVWriter csvWriter = new CSVWriter(writer);
-        List identityList = new ArrayList();
-        List identityListTmp = new ArrayList ();
 
-        LinkedProperties propIdentity = PropUtils.loadLinkedProperties("identity.properties");
-        identityList = propIdentity.getKeyList();
 
 
        // String recordPath = FileUtils.getPath()+ "\\data\\01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_01F21F5D-9622-4F0F-B0D3-8ECC73715CB6_iPhone 7 Plus_20180212182520_A.csv";
@@ -67,102 +68,80 @@ public class CalcUtils {
 
         String IME = getIMEName(recordPath);
         boolean isIPhone = isIPhone(recordPath);
+
+        LinkedProperties propIdentity = PropUtils.loadLinkedProperties("identity.properties");
+        ArrayList identityList = new ArrayList();
+        identityList = propIdentity.getKeyList();
+
         //获取到原始数据的标题
         String[] titleA = lines.get(0);
-        for(int i=0; i<titleA.length;i++){
-            titleA[i] =titleA[i].trim();
+
+        if(!isFirstWrite){
+            String[] head =  CalcUtils.getHead(filePath2);
+            List indexAllTmp = Arrays.asList(head);
+            indexAll = new ArrayList(indexAllTmp);
+            indexAll.subList(indexAll.size()-21,indexAll.size()).clear();
+            indexAll.remove(0);
         }
 
 
-      //  List<Integer> indexList = new ArrayList<Integer>();
-        int[] indexs = new int[12];
+
+
+        for(int i=0; i<titleA.length;i++){
+            titleA[i] =titleA[i].trim();
+            if(isFirstWrite){
+                if(!"time".equals(titleA[i])&&!"type".equals(titleA[i])){
+                    indexAll.add(titleA[i] );
+                }
+            }else {
+                if(!"time".equals(titleA[i])&&!"type".equals(titleA[i])&&!indexAll.contains(titleA[i])){
+                    indexAll.add(titleA[i] );
+                }
+            }
+
+        }
+
+
+        //增加标题即索引
+        List identityListTmp = new ArrayList ();
+        //System.out.println(indexAll);
+        for (int i = 0; i < indexAll.size();i++) {
+            if(isFirstWrite){
+                identityListTmp.add(indexAll.get(i)+"_max");
+                identityListTmp.add(indexAll.get(i)+"_min");
+                identityListTmp.add(indexAll.get(i)+"_avg");
+                identityListTmp.add(indexAll.get(i)+"_loss");
+            }else{
+                if(indexAll.get(i).indexOf("_max")==-1&&indexAll.get(i).indexOf("_min")==-1&&indexAll.get(i).indexOf("_avg")==-1&&indexAll.get(i).indexOf("_loss")==-1){
+                    identityListTmp.add(indexAll.get(i)+"_max");
+                    identityListTmp.add(indexAll.get(i)+"_min");
+                    identityListTmp.add(indexAll.get(i)+"_avg");
+                    identityListTmp.add(indexAll.get(i)+"_loss");
+                }else {
+                    identityListTmp.add(indexAll.get(i));
+                }
+            }
+
+        }
+
+
+        //java8新特性　去除不必要的元素
+        identityList.removeIf(s -> s.toString().indexOf("_x")>-1
+                ||s.toString().indexOf("_y")>-1
+                ||s.toString().indexOf("_z")>-1);
+
+        //获取操作目录
+        List identityOper = new ArrayList();
+
+        identityOper.addAll(identityList);
+
+        identityList.addAll(1,identityListTmp);
+
+        int[] indexs = new int[identityList.size()];
         for (int i = 0; i < indexs.length; i++) {
             indexs[i] = -1;
         }//数组初始化为-1
-        boolean isAccelerometer = true;//是否取值加速度
-        boolean isGyroscope = true;//是否取值陀螺仪
-        boolean isGravity = true;//是否取值重力感应
-        boolean isRotation = true;////是否取值位移
 
-        //增加标题即索引
-        for (int i = 0; i < propIdentity.getKeyList().size();i++) {
-             if(identityList.get(i).toString().indexOf("_x")>-1
-                     ||identityList.get(i).toString().indexOf("_y")>-1
-                     ||identityList.get(i).toString().indexOf("_z")>-1){
-
-                 identityListTmp.add(identityList.get(i)+"_max");
-                 identityListTmp.add(identityList.get(i)+"_min");
-                 identityListTmp.add(identityList.get(i)+"_avg");
-                 identityListTmp.add(identityList.get(i)+"_loss");
-
-
-
-                 //获取索引
-                 String titleSingle = propIdentity.getProperty(identityList.get(i).toString());
-                 for(String title:titleA){
-                     if(titleSingle.indexOf(title) >-1){//iphone按标题取值
-                         int indexOf= ArrayUtils.indexOf( titleA, title);
-                       //  indexList.add(indexOf);
-                        // System.out.println("i=="+i);
-                         indexs[i-1]=indexOf;
-                     }else {
-                         //安卓按最先出现的取值
-                         if(!isIPhone) {
-                             int indexOf = 0;
-//                             setIndexValue("accelerometer",isAccelerometer,titleA,title,indexs);
-                             if (title.toLowerCase().contains("accelerometer") && isAccelerometer) {
-                                 indexOf = ArrayUtils.indexOf(titleA, title);
-                                 //System.out.println(title);
-                                 indexs[0]=indexOf;
-                                 indexs[1]=indexOf+1;
-                                 indexs[2]=indexOf+2;
-//                                 indexList.add(indexOf);
-//                                 indexList.add(indexOf + 1);
-//                                 indexList.add(indexOf + 2);
-                                 isAccelerometer = false;
-                             }
-                             if (title.toLowerCase().contains("gyroscope") && isGyroscope) {
-                                 indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexs[3]=indexOf;
-                                 indexs[4]=indexOf+1;
-                                 indexs[5]=indexOf+2;
-//                                 indexList.add(indexOf);
-//                                 indexList.add(indexOf + 1);
-//                                 indexList.add(indexOf + 2);
-                                 isGyroscope = false;
-                             }
-                             if (title.toLowerCase().contains("gravity") && isGravity) {
-                                 indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexs[6]=indexOf;
-                                 indexs[7]=indexOf+1;
-                                 indexs[8]=indexOf+2;
-//                                 indexList.add(indexOf);
-//                                 indexList.add(indexOf + 1);
-//                                 indexList.add(indexOf + 2);
-                                 isGravity = false;
-                             }
-                             if (title.toLowerCase().contains("rotation") && isRotation) {
-                                 indexOf = ArrayUtils.indexOf(titleA, title);
-                                 indexs[9]=indexOf;
-                                 indexs[10]=indexOf+1;
-                                 indexs[11]=indexOf+2;
-//                                 indexList.add(indexOf);
-//                                 indexList.add(indexOf + 1);
-//                                 indexList.add(indexOf + 2);
-                                 isRotation = false;
-                             }
-                         }
-
-
-                     }
-                 }
-
-             }
-
-        }
-
-
-       // Integer[] indexs = indexList.toArray(new Integer[0]);
         int len = indexs.length;
         //找出列
         List<String[]> list = new ArrayList<String[]>();
@@ -184,53 +163,60 @@ public class CalcUtils {
         }
 
 
-
-
-
-
-        //java8新特性　去除不必要的元素
-        identityList.removeIf(s -> s.toString().indexOf("_x")>-1
-                ||s.toString().indexOf("_y")>-1
-                ||s.toString().indexOf("_z")>-1);
-
-        //获取操作目录
-        List identityOper = new ArrayList();
-        identityOper.addAll(identityList);
-
-        identityList.addAll(1,identityListTmp);
-
         Object[] title = identityList.toArray(new String[0]);
         // 输出String数组及标题
-        String [] strs=new String[title.length];
-        for (int i = 0; i < title.length; i++) {
-            strs[i] = title[i].toString();
-        }
+            String [] strs=new String[title.length];
+            for (int i = 0; i < title.length; i++) {
+                strs[i] = title[i].toString();
+            }
+
 
         //输出数据
         String[] para  = new String [title.length];
         para[0] =IME;
         //输出方差均值最小最大
-        for(int ii = 0;ii<len; ii++){
-            String[] tmp = list.get(ii);
-            para[4*(ii+1)-3] = getMax(tmp)+"";
-            para[4*(ii+1)-2] = getMin(tmp)+"";
-            para[4*(ii+1)-1] = getLoss(tmp)+"";
-            para[4*(ii+1)] = getAver(tmp)+"";
-        }
+//        for(int ii = 0;ii<len; ii++){
+//            String[] tmp = list.get(ii);
+//            para[4*(ii+1)-3] = getMax(tmp)+"";
+//            para[4*(ii+1)-2] = getMin(tmp)+"";
+//            para[4*(ii+1)-1] = getLoss(tmp)+"";
+//            para[4*(ii+1)] = getAver(tmp)+"";
+//        }
 
         //其余的值进行赋值
-
-        int len2 =title.length-4*len-1;
+        int len2 =21;
         String[] operation =  operationHandler(lines,identityOper,propIdentity);
         for(int jj=0;jj<len2;jj++){
-            para[4*len+jj+1]=operation[jj];
+            para[len-len2+jj] =operation[jj];
         }
 
-        if(isFirstWrite){
+//        if(isFirstWrite){
+        //先写入title
+             Writer writer = new FileWriter(filePath2);
+            CSVWriter csvWriter = new CSVWriter(writer);
             csvWriter.writeNext(strs);
+//        }
+        if(!isFirstWrite){
+            for (int i = 0; i < dataLines.size(); i++) {
+                if(i != 0){
+                    String[] data =dataLines.get(i);
+                    String[] dataTemp = new String[para.length];
+                    dataTemp[0] = data[0];
+                    Arrays.copyOfRange(data, data.length-21, data.length);
+                    System.out.println(Arrays.toString(Arrays.copyOfRange(data, data.length-21, data.length)));
+                    System.arraycopy(Arrays.copyOfRange(data, data.length-21, data.length),0,dataTemp,dataTemp.length-21,21);
+                    csvWriter.writeNext(dataTemp);
+                }
+            }
         }
 
         csvWriter.writeNext(para);
+
+        if (retFile.exists()){
+            isFirstWrite = true;
+        }else {
+            isFirstWrite = false;
+        }
         csvWriter.close();
         //保存每一笔汇款数据的list
 
@@ -324,6 +310,14 @@ public class CalcUtils {
         return lines;
     }
 
+    public static String[]  getHead(String uploadPath) throws IOException{
+
+        Reader reader = new FileReader(uploadPath);
+        CSVReader csvReader= new CSVReader(reader);
+        String [] header = csvReader.readNext();   //用readnext读取之后就不存在于stream中了
+        return header;
+    }
+
     public static String getIMEName(String uploadPath) throws IOException{
         String name = "";
         File file = new File(uploadPath);
@@ -379,7 +373,7 @@ public class CalcUtils {
                 if(!identityMap.containsKey(line[line.length - 1])){
                     identityMap.put(line[line.length - 1],"1");
                 }
-                System.out.println(line[line.length - 1]);
+              //  System.out.println(line[line.length - 1]);
                 //收集操作时间
                 if("".equals(operationTmp)){
                     if((("0|1|2|10|11|20|30|40").indexOf(line[line.length - 1]))>-1&&!"".equals(line[line.length - 1])) {
@@ -396,7 +390,7 @@ public class CalcUtils {
                         }
                     }else {
                         if(timeTmp != null){
-                            System.out.println(timeTmp+","+operationTmp);
+                    //        System.out.println(timeTmp+","+operationTmp);
                             calQuality(timeTmp,operationTmp,identityMap);//计算数量
                             calAVGTime(timeTmp,operationTmp,identityMap);//计算操作时间
                         }

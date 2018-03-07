@@ -17,7 +17,7 @@ public class LinkedProperties extends Properties {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Object> keyList = new ArrayList<Object>();
+    private ArrayList<Object> keyList = new ArrayList<Object>();
 
     /**
      * 默认构造方法
@@ -73,7 +73,7 @@ public class LinkedProperties extends Properties {
      * 获取Properties中key的有序集合
      * @return
      */
-    public List<Object> getKeyList() {
+    public ArrayList<Object> getKeyList() {
         return keyList;
     }
 

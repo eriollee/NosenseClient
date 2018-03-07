@@ -21,7 +21,7 @@ public class CSVUtils {
         if(fileName.indexOf("iPhone")>-1){
             devName = s[2];
         }else {
-            devName = s[0];
+            devName = s[1];
         }
 
 
