@@ -33,6 +33,8 @@ public class CalcUtils {
     public static int Tmp300 = 0;
     public static int Tmp400 = 0;
 
+    public static int totalIndexPostion = 0;//总偏移量
+
 
 
     public static void main(String[] args) throws IOException {
@@ -40,7 +42,7 @@ public class CalcUtils {
     }
 
     public static void dataProcess(String CanonicalPath) throws IOException {
-        List<String> indexAll = new  ArrayList<String>();
+        List<String> indexAll = new  ArrayList<String>();//标题
         System.out.println("file=="+CanonicalPath);
         //新建3文件，讲数据保存到3中
         String filePath2 = getPath()+ "_ALL.csv";
@@ -72,21 +74,26 @@ public class CalcUtils {
         LinkedProperties propIdentity = PropUtils.loadLinkedProperties("identity.properties");
         ArrayList identityList = new ArrayList();
         identityList = propIdentity.getKeyList();
+        int addIndexPosition = 0;//新增标题的位移
+        int existIndexPosition = 0;//存量标题的位移
 
-        //获取到原始数据的标题
-        String[] titleA = lines.get(0);
+        List indexAllTmp = new ArrayList();
 
+        //获取到存量数据的标题
         if(!isFirstWrite){
             String[] head =  CalcUtils.getHead(filePath2);
-            List indexAllTmp = Arrays.asList(head);
+            indexAllTmp = Arrays.asList(head);
             indexAll = new ArrayList(indexAllTmp);
+            indexAllTmp = new ArrayList(indexAllTmp);
             indexAll.subList(indexAll.size()-21,indexAll.size()).clear();
             indexAll.remove(0);
         }
 
 
-
-
+        //获取indexHashMap
+        HashMap<Integer,List> indexHashMap = new  HashMap<Integer,List>();
+        //获取到原始数据的标题
+        String[] titleA = lines.get(0);
         for(int i=0; i<titleA.length;i++){
             titleA[i] =titleA[i].trim();
             if(isFirstWrite){
@@ -94,9 +101,47 @@ public class CalcUtils {
                     indexAll.add(titleA[i] );
                 }
             }else {
-                if(!"time".equals(titleA[i])&&!"type".equals(titleA[i])&&!indexAll.contains(titleA[i])){
-                    indexAll.add(titleA[i] );
+                //如果没有重复的标题,则找出索引
+                if(!"time".equals(titleA[i])
+                        &&!"type".equals(titleA[i])
+                        &&(indexAll.contains(titleA[i]+"_max")
+                        ||indexAll.contains(titleA[i]+"_min")
+                        ||indexAll.contains(titleA[i]+"_avg")
+                        ||indexAll.contains(titleA[i]+"_loss"))){
+                    System.out.println("titleA["+i+"]=="+titleA[i]);
+                    int max = indexAllTmp.indexOf(titleA[i]+"_max");
+                    int min = indexAllTmp.indexOf(titleA[i]+"_min");
+                    int avg = indexAllTmp.indexOf(titleA[i]+"_avg");
+                    int loss = indexAllTmp.indexOf(titleA[i]+"_loss");
+
+
+                    indexHashMap.put(i,new ArrayList<Integer>()
+                    {
+                        {
+                        add(max);
+                        add(min);
+                        add(avg);
+                        add(loss);
+                        }
+                    });
+
+                    existIndexPosition += 4;
+
+
+
                 }
+
+                //如果没有重复的标题,则增加标题
+                if(!"time".equals(titleA[i])
+                        &&!"type".equals(titleA[i])
+                        &&(!indexAll.contains(titleA[i]+"_max")
+                        ||!indexAll.contains(titleA[i]+"_min")
+                        ||!indexAll.contains(titleA[i]+"_avg")
+                        ||!indexAll.contains(titleA[i]+"_loss"))){
+                    indexAll.add(titleA[i] );
+                    addIndexPosition += 4;
+                }
+
             }
 
         }
@@ -145,13 +190,13 @@ public class CalcUtils {
         int len = indexs.length;
         //找出列
         List<String[]> list = new ArrayList<String[]>();
-        for(int j=0;j<len+1;j++){
+        for(int j=1;j<titleA.length-2+1;j++){
             String[] tmp = new String[lines.size()];
             for(int i=0;i<lines.size()-1;i++){
                 String line[] = lines.get(i+1);
                 if(j<len){
                     try {
-                        tmp[i] = line[indexs[j]];//取索引
+                        tmp[i] = line[j];//取索引
                     } catch (Exception e) {
                         tmp[i] = "0";
                     }
@@ -162,7 +207,6 @@ public class CalcUtils {
             list.add(tmp);
         }
 
-
         Object[] title = identityList.toArray(new String[0]);
         // 输出String数组及标题
             String [] strs=new String[title.length];
@@ -170,20 +214,41 @@ public class CalcUtils {
                 strs[i] = title[i].toString();
             }
 
+        //计算偏移量
+        System.out.println(indexHashMap);
 
+        int indexPosition = 0;
+        if(!isFirstWrite){
+            if(addIndexPosition !=0){
+                indexPosition = title.length-1-21-addIndexPosition;//偏移量=总长-固定type-增加的偏移量-存量偏移
+          //      totalIndexPostion = indexPosition;
+            }
+        }
+          System.out.println("indexPosition=="+indexPosition);
         //输出数据
         String[] para  = new String [title.length];
+        Arrays.fill(para,"0");
         para[0] =IME;
         //输出方差均值最小最大
-//        for(int ii = 0;ii<len; ii++){
-//            String[] tmp = list.get(ii);
-//            para[4*(ii+1)-3] = getMax(tmp)+"";
-//            para[4*(ii+1)-2] = getMin(tmp)+"";
-//            para[4*(ii+1)-1] = getLoss(tmp)+"";
-//            para[4*(ii+1)] = getAver(tmp)+"";
-//        }
+        int indexTmp = 0;//临时移位变量
+        for(int ii = 0;ii<titleA.length-2; ii++){
+            String[] tmp = list.get(ii);
+            if(indexHashMap.containsKey(ii)){
+                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(0)))] = getMax(list.get(ii-1))+"";
+                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(1)))] = getMin(list.get(ii-1))+"";
+                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(2)))] = getLoss(list.get(ii-1))+"";
+                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(3)))] = getAver(list.get(ii-1))+"";
+                indexTmp += 4;
+            }else {
+                para[4*(ii+1)-3+indexPosition-indexTmp] = getMax(tmp)+"";
+                para[4*(ii+1)-2+indexPosition-indexTmp] = getMin(tmp)+"";
+                para[4*(ii+1)-1+indexPosition-indexTmp] = getLoss(tmp)+"";
+                para[4*(ii+1)+indexPosition-indexTmp] = getAver(tmp)+"";
+            }
 
-        //其余的值进行赋值
+        }
+
+        //其余的type值进行赋值
         int len2 =21;
         String[] operation =  operationHandler(lines,identityOper,propIdentity);
         for(int jj=0;jj<len2;jj++){
@@ -201,9 +266,11 @@ public class CalcUtils {
                 if(i != 0){
                     String[] data =dataLines.get(i);
                     String[] dataTemp = new String[para.length];
-                    dataTemp[0] = data[0];
-                    Arrays.copyOfRange(data, data.length-21, data.length);
-                    System.out.println(Arrays.toString(Arrays.copyOfRange(data, data.length-21, data.length)));
+                    Arrays.fill(dataTemp,"0");
+                    //dataTemp[0] = data[0];
+                    //复制传感器的值到新数组
+                    System.arraycopy(Arrays.copyOfRange(data, 0, data.length-21),0,dataTemp,0,data.length-21);
+                    //复制type值到新数组
                     System.arraycopy(Arrays.copyOfRange(data, data.length-21, data.length),0,dataTemp,dataTemp.length-21,21);
                     csvWriter.writeNext(dataTemp);
                 }
@@ -211,12 +278,6 @@ public class CalcUtils {
         }
 
         csvWriter.writeNext(para);
-
-        if (retFile.exists()){
-            isFirstWrite = true;
-        }else {
-            isFirstWrite = false;
-        }
         csvWriter.close();
         //保存每一笔汇款数据的list
 
