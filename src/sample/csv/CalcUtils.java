@@ -108,7 +108,7 @@ public class CalcUtils {
                         ||indexAll.contains(titleA[i]+"_min")
                         ||indexAll.contains(titleA[i]+"_avg")
                         ||indexAll.contains(titleA[i]+"_loss"))){
-                    System.out.println("titleA["+i+"]=="+titleA[i]);
+                   // System.out.println("titleA["+i+"]=="+titleA[i]);
                     int max = indexAllTmp.indexOf(titleA[i]+"_max");
                     int min = indexAllTmp.indexOf(titleA[i]+"_min");
                     int avg = indexAllTmp.indexOf(titleA[i]+"_avg");
@@ -215,7 +215,7 @@ public class CalcUtils {
             }
 
         //计算偏移量
-        System.out.println(indexHashMap);
+     //   System.out.println(indexHashMap);
 
         int indexPosition = 0;
         if(!isFirstWrite){
@@ -224,7 +224,7 @@ public class CalcUtils {
           //      totalIndexPostion = indexPosition;
             }
         }
-          System.out.println("indexPosition=="+indexPosition);
+    //      System.out.println("indexPosition=="+indexPosition);
         //输出数据
         String[] para  = new String [title.length];
         Arrays.fill(para,"0");
@@ -236,14 +236,14 @@ public class CalcUtils {
             if(indexHashMap.containsKey(ii)){
                 para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(0)))] = getMax(list.get(ii-1))+"";
                 para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(1)))] = getMin(list.get(ii-1))+"";
-                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(2)))] = getLoss(list.get(ii-1))+"";
-                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(3)))] = getAver(list.get(ii-1))+"";
+                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(2)))] = getAver(list.get(ii-1))+"";
+                para[Integer.parseInt(String.valueOf(indexHashMap.get(ii).get(3)))] = getLoss(list.get(ii-1))+"";
                 indexTmp += 4;
             }else {
                 para[4*(ii+1)-3+indexPosition-indexTmp] = getMax(tmp)+"";
                 para[4*(ii+1)-2+indexPosition-indexTmp] = getMin(tmp)+"";
-                para[4*(ii+1)-1+indexPosition-indexTmp] = getLoss(tmp)+"";
-                para[4*(ii+1)+indexPosition-indexTmp] = getAver(tmp)+"";
+                para[4*(ii+1)-1+indexPosition-indexTmp] = getAver(tmp)+"";
+                para[4*(ii+1)+indexPosition-indexTmp] = getLoss(tmp)+"";
             }
 
         }
